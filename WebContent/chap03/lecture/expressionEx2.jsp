@@ -15,63 +15,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<%
-for (int i = 0; i< 5; i++) {
-%>
-	<h1>Lorem ipsum dolor.</h1>
-	<%
-}
-%>
-
-	<%
-java.util.List<String> list = new java.util.ArrayList<>();
-list.add("java");
-list.add("jsp");
-list.add("spring");
-list.add("dbms");
-%>
-
+		java.util.Map<String, String> map = new java.util.HashMap<>();
+	map.put("java", "script");
+	map.put("html", "css");
+	map.put("dbms", "oracle");
+	map.put("servlet", "jsp");
+	map.put("jquery", "react");
+	map.put("python", "django");
+	%>
+	
 	<ul>
-		<%
-for (String item : list) {
-%>
-		<li>
-			<% out.print(item); %>
-		</li>
-		<%
-}
-%>
+	<%
+		for (java.util.Map.Entry<String, String> entry : map.entrySet()) {
+	%>
+	<li><%=entry.getKey()%> : <%=entry.getValue()%></li>
+<%-- 	<%
+		out.print(entry.getKey());
+	out.print(":");
+	out.print(entry.getValue());
+	%> 
+	위에랑 같은코드(li에 들어갔을 때)--%>
+	<%
+		}
+	%>
 	</ul>
-
-	<%
-boolean danger = true;
-%>
-	<%
-if (danger) {
-%>
-	<h1 class="text-danger">DANGER!!!!</h1>
-	<%
-} else {
-%>
-	<h1 class="text-info">INFO~~~~~</h1>
-	<%
-}
-%>
-
-
-	<%
-for (int i=0; i<5; i++){
-	for (int j=0; j<=i; j++){
-%>
-	<span style = "font-size : 100px">*</span>
-	<%
-}
-%>
-	<br>
-	<%
-}
-%>
 
 </body>
 </html>
