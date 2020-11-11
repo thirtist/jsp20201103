@@ -9,6 +9,7 @@ if (request.getParameter("code").equals("1")){
 	<script>alert('이메일이 중복 됩니다.');
 	location.href="loginJoin.jsp";
 	</script>
+	
 <%
 } else if (request.getParameter("code").equals("2")) {
 	%>
