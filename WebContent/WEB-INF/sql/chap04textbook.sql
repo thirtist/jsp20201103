@@ -65,4 +65,6 @@ SELECT * FROM employee where MOD(eno,2)=0;
 --04 입사일을 연도는 2자리 (YY), 월은 숫자(MON)로 표시하고 요일은 약어(DY)로 지정하여 출력하시오
 SELECT hiredate, TO_CHAR(hiredate, 'YY/MON/DY') FROM employee;
 --05 올해 며칠이 지났는지 출력하시오. 현재 날짜에서 올해 1월1일을 뺀 결과를 출력하고 TO_DATE함수를 사용하여 데이터형을 일치 시키시오.
-SELECT TRUNC (sysdate - TRUNC(sysdate, 'YY')) FROM dual;
+SELECT TRUNC(sysdate-TO_DATE('2020/01/01')) FROM dual;
+
+SELECT TRUNC(sysdate - TRUNC(sysdate, 'YY')) FROM dual;
