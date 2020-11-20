@@ -7,7 +7,7 @@ public class Car {
 	//stop
 	public boolean isStop() { //boolean을 리턴하는 프로퍼티는 앞에 is를 붙여도됨
 								// 따라서 여기서 메소드이름을 isStop바꿔도됨
-		return false;
+		return speed == 0;
 	}
 	
 	//name 프로퍼티
