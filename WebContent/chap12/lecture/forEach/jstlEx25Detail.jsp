@@ -21,8 +21,6 @@
 제목 : <input type="text" readonly value="${list[param.index].title }"/>
 <br />
 
-<%pageContext.setAttribute("arg0", "arg1") %>
-
 <textarea name="" id="" cols="30" rows="3" readonly>${list[param.index].body }</textarea>
 
 <c:out value="${list[param.index].body}"></c:out>
