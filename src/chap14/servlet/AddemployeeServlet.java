@@ -1,4 +1,4 @@
-package chap14servlet;
+package chap14.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
