@@ -40,3 +40,14 @@ CREATE TABLE emp_second (
     ename VARCHAR2(10),
     salary NUMBER(7,2) CONSTRAINT emp_second_salary_min CHECK (salary>0)
 );
+
+
+
+
+
+
+
+
+
+
+
