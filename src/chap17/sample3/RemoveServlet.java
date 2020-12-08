@@ -3,6 +3,7 @@ package chap17.sample3;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,47 +17,43 @@ import javax.servlet.http.HttpServletResponse;
 import chap05.Post;
 
 /**
- * Servlet implementation class ViewServlet
+ * Servlet implementation class RemoveServlet
  */
-@WebServlet("/sample3/post/view")
-public class ViewServlet extends HttpServlet {
+@WebServlet(name = "RemoveServlet2", urlPatterns = { "/sample3/post/remove" })
+public class RemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public RemoveServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public ViewServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		Post post = getPost(id);
-
-		String path = "/WEB-INF/view/chap17/view.jsp";
-
-		request.setAttribute("post", post);
-		request.getRequestDispatcher(path).forward(request, response);
+		
+		String sql = "DELETE FROM post WHERE id=?";
+		
+		// delete jdbc code
+		remove(sql, id);
+		
+		response.sendRedirect(request.getContextPath()+"/sample3/post/main");
 	}
+	
+	protected void remove(String sql, String id) {
 
-	protected Post getPost(String id) {
-
-		String sql = "SELECT id, title, body FROM post WHERE id =" + id;
 		String user = "C##MYDBMS";
 		String password = "admin";
 		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 
-		Post post = null;
-
 		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		int i = 0;
 		
 		try {
 			// 1.드라이버로딩
@@ -64,16 +61,16 @@ public class ViewServlet extends HttpServlet {
 			// 2.연결생성
 			con = DriverManager.getConnection(url, user, password);
 			// 3.statement생성
-			stmt = con.createStatement();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(id));
 			// 4.쿼리 실행
-			rs = stmt.executeQuery(sql);
+			i = pstmt.executeUpdate();
 			// 5.결과처리
 			// SELECT id, title FROM post
-			if (rs.next()) {
-				post= new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(2));
-				post.setBody(rs.getString(3));
+			if (i != 0) {
+				System.out.println("삭제성공");
+			} else {
+				System.out.println("삭제실패");
 			}
 
 			// 6.statement,연결닫기
@@ -82,8 +79,8 @@ public class ViewServlet extends HttpServlet {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(stmt != null) {					
-					stmt.close();
+				if(pstmt != null) {					
+					pstmt.close();
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -98,16 +95,14 @@ public class ViewServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		return post;
 	}
+	
+	
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

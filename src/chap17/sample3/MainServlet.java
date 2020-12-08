@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import chap05.Post;
+import chap20.lecture.DBUtil;
 
 /**
  * Servlet implementation class MainServlet
@@ -55,15 +56,16 @@ public class MainServlet extends HttpServlet {
 		
 		// 1.~6
 				String sql = "SELECT id, title FROM post ORDER BY id desc";
-				String user = "C##MYDBMS";
-				String password = "admin";
-				String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+				//String user = "C##MYDBMS";
+				//String password = "admin";
+				//String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 				
 				try {
 					// 1.드라이버로딩
-					Class.forName("oracle.jdbc.driver.OracleDriver");
+					//Class.forName("oracle.jdbc.driver.OracleDriver");
 					// 2.연결생성
-					Connection con = DriverManager.getConnection(url, user, password);
+					//Connection con = DriverManager.getConnection(url, user, password);
+					Connection con = DBUtil.getConnection();
 					// 3.statement생성
 					Statement stmt = con.createStatement();
 					// 4.쿼리 실행
